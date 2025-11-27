@@ -30,8 +30,8 @@ from person
 WHERE person_id IN (1, 2);
 
 /*
-  Det som behöver göras är att ta bort kolumnen "courses" och istället skapa en ny tabell med alla kurserna i
-  tillsammans med en koppling till person-tabellen.
+  Det som behöver göras är att ta bort kolumnen "PhoneNumbers" och istället skapa en ny tabell med alla telefonnumrena i
+  tillsammans med en koppling till person-tabellen. Denna koppling görs med
 */
 
 #   ta bort kolumn:
