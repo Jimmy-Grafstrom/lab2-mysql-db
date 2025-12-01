@@ -8,6 +8,8 @@ CREATE TABLE person
     PRIMARY KEY (person_id)
 );
 
+DROP TABLE person;
+
 INSERT INTO person (first_name, last_name, dob, income)
 VALUES ('Anna', 'Andersson', '1955-12-23', 234777),
        ('Bertil', 'Bertilsson', '1977-12-23', 235203),
@@ -29,8 +31,11 @@ WHERE person_id IN (1, 2);
 
 /*
   Det som behöver göras är att ta bort kolumnen "PhoneNumbers" och istället skapa en ny tabell med alla telefonnumrena i
-  tillsammans med en koppling till person-tabellen. Denna koppling görs med foreign key som kopplar till en primary key i en annan tabell.
+  tillsammans med en koppling till person-tabellen. Denna koppling görs med
 */
+
+#   ta bort kolumn:
+#   ALTER TABLE person DROP COLUMN courses;
 
 #   skapa ny tabell:
 CREATE TABLE students
@@ -38,6 +43,39 @@ CREATE TABLE students
     student_id   INT PRIMARY KEY AUTO_INCREMENT,
     student_name VARCHAR(20) NOT NULL
 );
+CREATE TABLE courses
+(
+    course_id INT PRIMARY KEY AUTO_INCREMENT,
+    course    VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE student_courses
+(
+    student_id INT NOT NULL,
+    course_id  INT NOT NULL,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students (student_id),
+    FOREIGN KEY (course_id) REFERENCES courses (course_id)
+);
+
+#   infoga kurser i den nya tabellen:
+INSERT INTO students (student_name)
+VALUES ('Axel'),
+       ('Bertil'),
+       ('Christoffer');
+
+#   infoga kurser i den nya tabellen:
+INSERT INTO courses (course)
+VALUES ('Math'),
+       ('English'),
+       ('Chemistry');
+
+INSERT INTO student_courses (student_id, course_id)
+VALUES (1,1),
+       (1,2),
+       (2,3),
+       (3,2),
+       (3,3);
 
 CREATE TABLE telephone_number
 (
@@ -52,6 +90,8 @@ VALUES ('070-1111111', 1),
        ('070-2222222', 1),
        ('070-3333333', 2),
        ('070-5555555', 2);
+
+DROP TABLE telephone_number;
 
 SELECT s.student_name, p.phone_number
 FROM students as s
